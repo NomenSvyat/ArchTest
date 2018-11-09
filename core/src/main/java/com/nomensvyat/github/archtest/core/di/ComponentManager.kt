@@ -14,6 +14,7 @@ abstract class ComponentManager {
                 map[componentExtends] = component
             }
         }
+        map[clazz] = component
     }
 
     fun <T : Any> get(clazz: KClass<T>): T? {
@@ -28,8 +29,15 @@ abstract class ComponentManager {
     fun <T : Any> has(clazz: KClass<T>): Boolean = map.containsKey(clazz.java)
 
     fun <T : Any> remove(clazz: KClass<T>) {
-        // TODO remove all interfaces
-        map.remove(clazz.java)
+        val javaClass = clazz.java
+
+        javaClass.interfaces.forEach { componentInterface ->
+            map.remove(componentInterface)
+            componentInterface.interfaces.forEach { componentExtends ->
+                map.remove(componentExtends)
+            }
+        }
+        map.remove(javaClass)
     }
 
     companion object {
