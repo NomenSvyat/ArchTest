@@ -1,12 +1,17 @@
 package com.nomensvyat.github.archtest.main
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.nomensvyat.github.archtest.core.di.ComponentManager
 import com.nomensvyat.github.archtest.main.di.FeatureMainComponent
 import com.nomensvyat.github.archtest.main.di.FeatureMainComponentProvider
+import com.nomensvyat.github.ui.base.presentation.BaseActivity
 
-class FeatureMainActivity : AppCompatActivity() {
+class FeatureMainActivity : BaseActivity() {
+    private fun inject() {
+        componentManager.getOrThrow(FeatureMainComponentProvider::class)
+            .provideFeatureMainComponent()
+            .also { componentManager.put(it) }
+            .injectTo(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         inject()
@@ -14,18 +19,10 @@ class FeatureMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_feature_main)
     }
 
-    private fun inject() {
-        val componentManager = ComponentManager.INSTANCE
-        componentManager.getOrThrow(FeatureMainComponentProvider::class)
-            .provideFeatureMainComponent()
-            .also { componentManager.put(it) }
-            .injectTo(this)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         if (isFinishing) {
-            ComponentManager.INSTANCE.remove(FeatureMainComponent::class)
+            componentManager.remove(FeatureMainComponent::class)
         }
     }
 }
