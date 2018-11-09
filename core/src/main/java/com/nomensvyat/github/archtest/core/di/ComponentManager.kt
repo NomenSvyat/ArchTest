@@ -28,6 +28,7 @@ abstract class ComponentManager {
     fun <T : Any> has(clazz: KClass<T>): Boolean = map.containsKey(clazz.java)
 
     fun <T : Any> remove(clazz: KClass<T>) {
+        // TODO remove all interfaces
         map.remove(clazz.java)
     }
 
