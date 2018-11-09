@@ -1,2 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.nomensvyat.github.archtest.feature_main"/>
+          package="com.nomensvyat.github.archtest.main">
+
+    <application>
+        <activity android:name="com.nomensvyat.github.archtest.feature.main.FeatureMainActivity">
+        </activity>
+    </application>
+
+</manifest>
