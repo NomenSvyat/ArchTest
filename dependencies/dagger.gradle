@@ -1,0 +1,6 @@
+def daggerVersion = "2.17"
+rootProject.ext.daggerVersion = daggerVersion
+dependencies{
+    api "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+}

@@ -1,0 +1,6 @@
+dependencies {
+    def moxyVersion = "1.5.3"
+    kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
+    api "com.arello-mobile:moxy:$moxyVersion"
+    api "com.arello-mobile:moxy-app-compat:$moxyVersion"
+}
