@@ -1,2 +1,6 @@
 <manifest
-        package="com.nomensvyat.github.archtest.secondary"/>
+        xmlns:android="http://schemas.android.com/apk/res/android" package="com.nomensvyat.github.archtest.secondary">
+    <application>
+        <activity android:name=".FeatureSecondaryActivity"/>
+    </application>
+</manifest>

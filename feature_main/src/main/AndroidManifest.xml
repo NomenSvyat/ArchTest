@@ -3,8 +3,7 @@
           package="com.nomensvyat.github.archtest.main">
 
     <application>
-        <activity android:name="com.nomensvyat.github.archtest.feature.main.FeatureMainActivity">
-        </activity>
+        <activity android:name=".FeatureMainActivity"/>
     </application>
 
 </manifest>

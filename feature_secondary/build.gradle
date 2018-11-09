@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 apply from: "$rootDir/dependencies/dagger.gradle"
+apply from: "$rootDir/dependencies/support.gradle"
 apply from: "$rootDir/scripts/android-lib.gradle"
 
 dependencies {
