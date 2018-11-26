@@ -1,5 +1,6 @@
 package com.nomensvyat.github.ui.base.di
 
+import com.nomensvyat.github.ui.base.routing.ExtendedRouter
 import dagger.Module
 import dagger.Provides
 import ru.terrakok.cicerone.Cicerone
@@ -10,13 +11,15 @@ import javax.inject.Singleton
 @Module
 class NavigationModule {
 
-    private val cicerone: Cicerone<Router> = Cicerone.create()
+    @Singleton
+    @Provides
+    fun provideCicerone(extendedRouter: ExtendedRouter): Cicerone<ExtendedRouter> = Cicerone.create(extendedRouter)
 
     @Singleton
     @Provides
-    fun provideRouter(): Router = cicerone.router
+    fun provideRouter(cicerone: Cicerone<ExtendedRouter>): Router = cicerone.router
 
     @Singleton
     @Provides
-    fun provideNavigationHolder(): NavigatorHolder = cicerone.navigatorHolder
+    fun provideNavigationHolder(cicerone: Cicerone<ExtendedRouter>): NavigatorHolder = cicerone.navigatorHolder
 }
