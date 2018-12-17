@@ -1,16 +1,18 @@
 package com.nomensvyat.github.archtest.secondary
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.nomensvyat.github.archtest.core.SharedStateHolder
 import com.nomensvyat.github.archtest.core.di.ComponentManager
-import com.nomensvyat.github.archtest.secondary.di.FeatureSecondaryComponentProvider
+import com.nomensvyat.github.archtest.core.di.SharedStateHolderProvider
+import com.nomensvyat.github.archtest.secondary.di.DaggerFeatureSecondaryComponent
+import com.nomensvyat.github.ui.base.di.RoutingProvider
+import com.nomensvyat.github.ui.base.presentation.BaseActivity
 import javax.inject.Inject
 
-class FeatureSecondaryActivity : AppCompatActivity() {
+class FeatureSecondaryActivity : BaseActivity() {
 
     @Inject
-    lateinit var seconStateHolder: SharedStateHolder
+    lateinit var secondStateHolder: SharedStateHolder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         inject()
@@ -19,8 +21,12 @@ class FeatureSecondaryActivity : AppCompatActivity() {
     }
 
     private fun inject() {
-        ComponentManager.INSTANCE.getOrThrow(FeatureSecondaryComponentProvider::class)
-            .provideFeatureSecondaryComponent()
+        val routingProvider = ComponentManager.INSTANCE.getOrThrow(RoutingProvider::class)
+        val sharedStateHolderProvider = ComponentManager.INSTANCE.getOrThrow(SharedStateHolderProvider::class)
+        DaggerFeatureSecondaryComponent.builder()
+            .routingProvider(routingProvider)
+            .sharedStateHolderProvider(sharedStateHolderProvider)
+            .build()
             .injectTo(this)
     }
 }

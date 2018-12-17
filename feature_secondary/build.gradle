@@ -3,11 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 apply from: "$rootDir/dependencies/dagger.gradle"
-apply from: "$rootDir/dependencies/support.gradle"
 apply from: "$rootDir/scripts/android-lib.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":ui_utils")
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

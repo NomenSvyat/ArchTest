@@ -1,8 +1,9 @@
 package com.nomensvyat.github.archtest.main
 
 import android.os.Bundle
+import com.nomensvyat.github.archtest.main.di.DaggerFeatureMainComponent
 import com.nomensvyat.github.archtest.main.di.FeatureMainComponent
-import com.nomensvyat.github.archtest.main.di.FeatureMainComponentProvider
+import com.nomensvyat.github.ui.base.di.RoutingProvider
 import com.nomensvyat.github.ui.base.presentation.BaseActivity
 import com.nomensvyat.github.ui.base.routing.ExtendedRouter
 import com.nomensvyat.github.ui.base.routing.Screens
@@ -14,8 +15,12 @@ class FeatureMainActivity : BaseActivity() {
     lateinit var router: ExtendedRouter
 
     private fun inject() {
-        componentManager.getOrThrow(FeatureMainComponentProvider::class)
-            .provideFeatureMainComponent()
+        val routingProvider = componentManager.getOrThrow(RoutingProvider::class)
+        val featureMainComponent = DaggerFeatureMainComponent.builder()
+            .routingProvider(routingProvider)
+            .build()
+
+        featureMainComponent
             .also { componentManager.put(it) }
             .injectTo(this)
     }

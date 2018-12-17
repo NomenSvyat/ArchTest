@@ -8,7 +8,6 @@ apply from: "$rootDir/scripts/android-lib.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":feature_secondary")
     implementation project(":ui_utils")
 
     testImplementation 'junit:junit:4.12'

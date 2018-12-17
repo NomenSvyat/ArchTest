@@ -1,7 +1,7 @@
 package com.nomensvyat.github.archtest.di.application
 
-import com.nomensvyat.github.archtest.main.di.FeatureMainComponentProvider
 import com.nomensvyat.github.ui.base.di.NavigationModule
+import com.nomensvyat.github.ui.base.di.RoutingProvider
 import dagger.Component
 import javax.inject.Singleton
 
@@ -12,4 +12,4 @@ import javax.inject.Singleton
         NavigationModule::class
     ]
 )
-interface ApplicationComponent : FeatureMainComponentProvider
+interface ApplicationComponent : RoutingProvider
