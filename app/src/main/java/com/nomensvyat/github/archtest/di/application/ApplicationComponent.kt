@@ -1,5 +1,6 @@
 package com.nomensvyat.github.archtest.di.application
 
+import com.nomensvyat.github.archtest.MainActivity
 import com.nomensvyat.github.ui.base.di.NavigationModule
 import com.nomensvyat.github.ui.base.di.RoutingProvider
 import dagger.Component
@@ -12,4 +13,6 @@ import javax.inject.Singleton
         NavigationModule::class
     ]
 )
-interface ApplicationComponent : RoutingProvider
+interface ApplicationComponent : RoutingProvider {
+    fun injectTo(target: MainActivity)
+}
