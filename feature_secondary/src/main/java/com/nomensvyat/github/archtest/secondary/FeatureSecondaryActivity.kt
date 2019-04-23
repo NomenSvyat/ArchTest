@@ -1,13 +1,12 @@
 package com.nomensvyat.github.archtest.secondary
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.nomensvyat.github.archtest.core.SharedStateHolder
-import com.nomensvyat.github.archtest.core.di.ComponentManager
 import com.nomensvyat.github.archtest.secondary.di.FeatureSecondaryComponentProvider
+import com.nomensvyat.github.ui.base.presentation.BaseActivity
 import javax.inject.Inject
 
-class FeatureSecondaryActivity : AppCompatActivity() {
+class FeatureSecondaryActivity : BaseActivity() {
 
     @Inject
     lateinit var seconStateHolder: SharedStateHolder
@@ -19,7 +18,7 @@ class FeatureSecondaryActivity : AppCompatActivity() {
     }
 
     private fun inject() {
-        ComponentManager.INSTANCE.getOrThrow(FeatureSecondaryComponentProvider::class)
+        componentManager.getOrThrow(FeatureSecondaryComponentProvider::class)
             .provideFeatureSecondaryComponent()
             .injectTo(this)
     }

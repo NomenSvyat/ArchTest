@@ -1,9 +1,9 @@
 package com.nomensvyat.github.archtest
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.nomensvyat.github.ui.base.presentation.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
