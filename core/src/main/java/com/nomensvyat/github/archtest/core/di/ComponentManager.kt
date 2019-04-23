@@ -1,11 +1,21 @@
 package com.nomensvyat.github.archtest.core.di
 
+import com.nomensvyat.github.archtest.core.utils.extensions.removeIfEquals
 import kotlin.properties.Delegates
 import kotlin.reflect.KClass
 
-abstract class ComponentManager {
+/**
+ * Class for managing Dagger components
+ * */
+open class ComponentManager {
     private val map: MutableMap<Class<out Any>, Any> = mutableMapOf()
 
+    /**
+     * Stores Dagger generated component so it can be then retrieved by it's interface or
+     * interfaces which component interface extend
+     *
+     * @param component Dagger generated component
+     * */
     fun put(component: Any) {
         val clazz = component::class.java
         clazz.interfaces.forEach { componentInterface ->
@@ -14,33 +24,40 @@ abstract class ComponentManager {
                 map[componentExtends] = component
             }
         }
-        map[clazz] = component
     }
 
-    fun <T : Any> get(clazz: KClass<T>): T? {
+    fun <T : Any> get(klass: KClass<T>): T? {
         @Suppress("UNCHECKED_CAST")
-        return map[clazz.java] as? T?
+        return map[klass.java] as? T?
     }
 
-    fun <T : Any> getOrThrow(clazz: KClass<T>): T {
-        return get(clazz) ?: throw IllegalStateException("No component for class $clazz")
+    fun <T : Any> getOrThrow(klass: KClass<T>): T {
+        return get(klass) ?: throw IllegalStateException("No component for class $klass")
     }
 
-    fun <T : Any> has(clazz: KClass<T>): Boolean = map.containsKey(clazz.java)
+    fun <T : Any> has(klass: KClass<T>): Boolean = map.containsKey(klass.java)
 
-    fun <T : Any> remove(clazz: KClass<T>) {
-        val javaClass = clazz.java
-
-        javaClass.interfaces.forEach { componentInterface ->
-            map.remove(componentInterface)
-            componentInterface.interfaces.forEach { componentExtends ->
-                map.remove(componentExtends)
-            }
+    /**
+     * Removes from manager instances of [klass] and it's interfaces.
+     * Passing component's parent
+     * interfaces will not remove component instance from manager.
+     * It will just remove mapping for [klass] to component.
+     * Pass component interface to completely remove component instance from manager.
+     *
+     * @param klass component interface
+     * */
+    fun <T : Any> remove(klass: KClass<T>) {
+        val javaClazz = klass.java
+        val component = map.remove(javaClazz) ?: return
+        javaClazz.interfaces.forEach { componentInterface ->
+            map.removeIfEquals(componentInterface, component)
         }
-        map.remove(javaClass)
     }
+
 
     companion object {
         var INSTANCE: ComponentManager by Delegates.notNull()
     }
 }
+
+inline fun <reified T : Any> ComponentManager.getOrThrow(): T = getOrThrow(T::class)
